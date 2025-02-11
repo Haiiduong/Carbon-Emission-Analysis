@@ -299,3 +299,88 @@ RESULT:
 | Plastics                                                                                         | Trinseo LLC                            | Chemicals                                                              | USA            | 0            | 
 | Latex                                                                                            | Trinseo LLC                            | Chemicals                                                              | USA            | 0            | 
 **What are the industry groups of these products**?
+SQL:
+SELECT industry_group, product_name
+FROM product_emissions as t1
+join industry_groups as t2 on t1.industry_group_id = t2.id
+GROUP BY 1
+RESULT:
+| industry_group                                                         | product_name                                                                                                                                                                                                                                                                                                                                                                            | 
+| ---------------------------------------------------------------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | 
+| "Consumer Durables, Household and Personal Products"                   | Embody Chair                                                                                                                                                                                                                                                                                                                                                                            | 
+| "Food, Beverage & Tobacco"                                             | Frosted Flakes(R) Cereal                                                                                                                                                                                                                                                                                                                                                                | 
+| "Forest and Paper Products - Forestry, Timber, Pulp and Paper, Rubber" | Folding boxboard                                                                                                                                                                                                                                                                                                                                                                        | 
+| "Mining - Iron, Aluminum, Other Metals"                                | Hot Rolled Steel (HR)                                                                                                                                                                                                                                                                                                                                                                   | 
+| "Pharmaceuticals, Biotechnology & Life Sciences"                       | Alliance HPLC (High Peformance Liquid Chromatography)  The Alliance is an HPLC that is unique in that it has a single set of electronic boards that control the functions for both the solvent delivery system and the autosampler in the liquid chromatograph.                                                                                                                         | 
+| "Textiles, Apparel, Footwear and Luxury Goods"                         | Regular Straight 505® Jeans – Steel (Water                                                                                                                                                                                                                                                                                                                                              | 
+| Automobiles & Components                                               | VW Polo V 1.6 TDI BlueMotion Technology                                                                                                                                                                                                                                                                                                                                                 | 
+| Capital Goods                                                          | Office Chair                                                                                                                                                                                                                                                                                                                                                                            | 
+| Chemicals                                                              | Mobile Batteries                                                                                                                                                                                                                                                                                                                                                                        | 
+| Commercial & Professional Services                                     | Dell Laptop                                                                                                                                                                                                                                                                                                                                                                             | 
+| Consumer Durables & Apparel                                            | Regular Straight 505® Jeans – Steel (Water                                                                                                                                                                                                                                                                                                                                              | 
+| Containers & Packaging                                                 | Corrugated box                                                                                                                                                                                                                                                                                                                                                                          | 
+| Electrical Equipment and Machinery                                     | ACTI9 IID K 2P 40A 30MA AC-TYPE RESIDUAL CURRENT CIRCUIT BREAKER                                                                                                                                                                                                                                                                                                                        | 
+| Energy                                                                 | Natural Gas                                                                                                                                                                                                                                                                                                                                                                             | 
+| Food & Beverage Processing                                             | "Frosted Flakes, 23 oz, produced in Lancaster, PA (one carton)"                                                                                                                                                                                                                                                                                                                         | 
+| Food & Staples Retailing                                               | Walmart Brand Products                                                                                                                                                                                                                                                                                                                                                                  | 
+| Gas Utilities                                                          | City gas                                                                                                                                                                                                                                                                                                                                                                                | 
+| Household & Personal Products                                          | "Verre Infini, perfumery glass made only with domestic glass from segregation. Middle bottle weighing 100g"                                                                                                                                                                                                                                                                             | 
+| Materials                                                              | KURALON  fiber                                                                                                                                                                                                                                                                                                                                                                          | 
+| Media                                                                  | "Bloomberg's standard-issue flat panel configuration (prior to 2010) was two 19\" panels mounted on a metal stand. In early 2010 Bloomberg engaged in the WRI Product Life Cycle Roadtest for this functional unit (cradle-to-grave). The functional unit has a lifespan of 5 years, so the emissions indicated [in this report] are the full emissions associated with that lifespan." | 
+| Retailing                                                              | Staples Sustainable Earth 38A toner cartridge                                                                                                                                                                                                                                                                                                                                           | 
+| Semiconductors & Semiconductor Equipment                               | IC chips of Smartphone                                                                                                                                                                                                                                                                                                                                                                  | 
+| Semiconductors & Semiconductors Equipment                              | 4Gb LPDDR2 SDRAM                                                                                                                                                                                                                                                                                                                                                                        | 
+| Software & Services                                                    | USB software                                                                                                                                                                                                                                                                                                                                                                            | 
+| Technology Hardware & Equipment                                        | Multifunction Printers                                                                                                                                                                                                                                                                                                                                                                  | 
+| Telecommunication Services                                             | BlackBerry Bold 9900                                                                                                                                                                                                                                                                                                                                                                    | 
+| Tires                                                                  | 1 fuel-efficient tire for passenger cars (乗用車用低燃費タイヤ)                                                                                                                                                                                                                                                                                                                                   | 
+| Tobacco                                                                | Tobacco                                                                                                                                                                                                                                                                                                                                                                                 | 
+| Trading Companies & Distributors and Commercial Services & Supplies    | CHEP wooden exchange (pooled) pallet in USA 48x40                                                                                                                                                                                                                                                                                                                                       | 
+| Utilities                                                              | City gas                                                                                                                                                                                                                                                                                                                                                                                | 
+
+
+**What are the industries with the highest contribution to carbon emissions?**
+SQL:
+SELECT industry_group, SUM(carbon_footprint_pcf) as total_co2_emissions
+FROM product_emissions as t1
+join industry_groups as t2 on t1.industry_group_id = t2.id
+GROUP BY 1
+ORDER BY 2 desc
+LIMIT 10
+RESULT:
+| industry_group                                   | total_co2_emissions | 
+| -----------------------------------------------: | ------------------: | 
+| Electrical Equipment and Machinery               | 9801558             | 
+| Automobiles & Components                         | 2582264             | 
+| Materials                                        | 577595              | 
+| Technology Hardware & Equipment                  | 363776              | 
+| Capital Goods                                    | 258712              | 
+| "Food, Beverage & Tobacco"                       | 111131              | 
+| "Pharmaceuticals, Biotechnology & Life Sciences" | 72486               | 
+| Chemicals                                        | 62369               | 
+| Software & Services                              | 46544               | 
+| Media                                            | 23017               | 
+
+**What are the companies with the highest contribution to carbon emissions**?
+SQL:
+select company_name, sum(carbon_footprint_pcf) as co2_emission
+FROM product_emissions as t1
+	join companies as t2 on t1.company_id = t2.id
+group by 1
+order by 2 desc
+limit 10
+RESULT:
+| company_name                            | co2_emission | 
+| --------------------------------------: | -----------: | 
+| "Gamesa Corporación Tecnológica, S.A."  | 9778464      | 
+| Daimler AG                              | 1594300      | 
+| Volkswagen AG                           | 655960       | 
+| "Mitsubishi Gas Chemical Company, Inc." | 212016       | 
+| "Hino Motors, Ltd."                     | 191687       | 
+| Arcelor Mittal                          | 167007       | 
+| Weg S/A                                 | 160655       | 
+| General Motors Company                  | 137007       | 
+| "Lexmark International, Inc."           | 132012       | 
+| "Daikin Industries, Ltd."               | 105600       | 
+
+**Which industry groups has demonstrated the most notable decrease in carbon footprints (PCFs) over time**
